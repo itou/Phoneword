@@ -17,5 +17,6 @@
         <Button x:Name="translateButon" Text="Translate" Clicked="OnTranslate" />
         <Button x:Name="callButton" Text="Call" IsEnabled="false" Clicked="OnCall" />
         <Button x:Name="callHistoryButton" Text="Call History" IsEnabled="False" Clicked="OnCallHistory"/>
+        <Button x:Name="ScanButton" Text="Scan" IsEnabled="True" Clicked="ScanButtonClicked"/>
     </StackLayout>
 </ContentPage>

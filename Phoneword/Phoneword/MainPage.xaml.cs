@@ -1,5 +1,6 @@
 ﻿using System;
 using Xamarin.Forms;
+using ZXing.Net.Mobile.Forms;
 
 namespace Phoneword
 {
@@ -47,6 +48,33 @@ namespace Phoneword
         async void OnCallHistory(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new CallHistoryPage());
+        }
+
+        async void ScanButtonClicked(object sender, EventArgs e)
+        {
+            // スキャナページの設定
+            var scanPage = new ZXingScannerPage()
+            {
+                DefaultOverlayTopText = "バーコードの読み取ります。",
+                DefaultOverlayBottomText = "",
+            };
+            // スキャナページの表示
+            await Navigation.PushAsync(scanPage);
+
+            // データが取れると発火
+            scanPage.OnScanResult += (result) =>
+            {
+                // スキャン停止
+                scanPage.IsScanning = false;
+
+                // PosAsyncで元のページに戻り、結果をダイアログで表示
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    await Navigation.PopAsync();
+                    await DisplayAlert("すきゃ完了", result.Text, "OK");
+                });
+            };
+
         }
     }
 }
